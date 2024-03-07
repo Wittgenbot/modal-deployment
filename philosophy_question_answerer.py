@@ -1,4 +1,4 @@
-from modal import Stub, Volume, Image, gpu
+from modal import Stub, Volume, Image
 import os
 
 stub = Stub("philosophy-question-answerer")
