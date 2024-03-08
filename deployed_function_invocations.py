@@ -7,6 +7,6 @@ model_file_name = "mistral-7b-instruct-v0.2.Q5_K_M.gguf"
 # download_model_to_volume.remote(model_file_name, download_url)
 
 query_model = modal.Function.lookup("philosophy-question-answerer", "query_model")
-prompt = 'Why is the skye blue?'
+prompt = 'Why is the sky blue?'
 response = query_model.remote(model_file_name, prompt)
 print(response)
