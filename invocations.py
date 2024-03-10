@@ -1,4 +1,7 @@
 import modal
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # download_model_to_volume = modal.Function.lookup("philosophy-question-answerer", "download_model_to_volume")
 # model_file_name = "mistral-7b-instruct-v0.2.Q5_K_M.gguf"
