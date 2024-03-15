@@ -1,6 +1,5 @@
 import modal
 from dotenv import load_dotenv
-from utils.faiss_index_enum import FaissIndex
 
 load_dotenv()
 
@@ -25,7 +24,10 @@ print(response)
 
 semantic_search = modal.Function.lookup("philosophy-question-answerer", "semantic_search")
 question = "What is Wittgenstein's private language argument?"
-faiss_index_type = FaissIndex.ChunkSize_512_ChunkOverlap_50
+index_type = {
+    'chunk_size': 512,
+    'chunk_overlap': 50
+}
 num_matched_excerpts = 2
-documents = semantic_search.remote(question, faiss_index_type, num_matched_excerpts)
+documents = semantic_search.remote(question, index_type, num_matched_excerpts)
 print(documents)

@@ -2,12 +2,12 @@ from utils.modal_utils import stub, volume, images
 
 
 @stub.function(volumes={"/data": volume}, image=images['semantic_search'])
-def semantic_search(question, faiss_index_type, num_matched_excerpts):
+def semantic_search(question, index_type, num_matched_excerpts):
 
     from langchain_community.vectorstores import FAISS
 
-    chunk_size = faiss_index_type.value['size']
-    chunk_overlap = faiss_index_type.value['overlap']
+    chunk_size = index_type['chunk_size']
+    chunk_overlap = index_type['chunk_overlap']
     faiss_index_path = f'/data/faiss_indices/ChunkSize_{chunk_size}_ChunkOverlap_{chunk_overlap}'
 
     embedding_model = stub.registered_functions['load_embedding_model'].local()
