@@ -1,16 +1,16 @@
 from modal import Stub, Volume, Image
 
 
-stub = Stub("philosophy-question-answerer")
+stub = Stub("wittgenbot")
 
 
 volume = Volume.from_name("fyp-volume")
 
 
 images = {
-    "download_model": (
+    "download_from_hf": (
         Image.debian_slim(python_version="3.10")
-        .pip_install("requests")
+        .pip_install("huggingface_hub")
     ),
     "download_embedding_model": (
         Image.debian_slim(python_version="3.10")
@@ -19,6 +19,10 @@ images = {
     "query_model": (
         Image.debian_slim(python_version="3.10")
         .pip_install("ctransformers", "torch")
+    ),
+    "query_wittgenbot": (
+        Image.debian_slim(python_version="3.10")
+        .pip_install("transformers", "torch", "accelerate", "bitsandbytes")
     ),
     "semantic_search": (
         Image.debian_slim(python_version="3.10")

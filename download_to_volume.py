@@ -2,34 +2,47 @@ from utils.modal_utils import stub, volume, images
 import os
 
 
-@stub.function(volumes={"/data": volume}, image=images['download_model'])
-def download_model(model_file_name, download_url):
+@stub.function(volumes={"/data": volume}, image=images['download_from_hf'])
+def download_hf_repo(repo_id):
     
-    import requests
+    from huggingface_hub import snapshot_download
 
-    save_directory = '/data/model/'
-    file_path = save_directory + model_file_name
+    save_directory = '/data/models/'
+    file_path = save_directory + repo_id.replace('/','_')
 
     if not os.path.exists(save_directory):
         os.makedirs(save_directory)
         print(f"Created directory {save_directory}")
 
-    print('Downloading model...')
-    response = requests.get(download_url, allow_redirects=True)
+    print(f'Downloading repository {repo_id}')   
+    snapshot_download(repo_id=repo_id,
+                      local_dir_use_symlinks=False,
+                      local_dir=file_path
+    )
 
-    if response.status_code == 200:
+    print(f'Committing changes to volume.')
+    volume.commit()
+    print('Changes committed.')
 
-        print('Model successfully downloaded.')
 
-        print('Saving to volume.')
+@stub.function(volumes={"/data": volume}, image=images['download_from_hf'])
+def download_hf_file(repo_id, file_name):
+    
+    from huggingface_hub import hf_hub_download
 
-        with open(file_path, 'wb') as file:
-            file.write(response.content)
+    save_directory = '/data/models/'
+    file_path = save_directory + repo_id.replace('/','_')
 
-        print(f"Model file saved to {file_path}")
+    if not os.path.exists(save_directory):
+        os.makedirs(save_directory)
+        print(f"Created directory {save_directory}")
 
-    else:
-        print(f"Failed to download the model file. Status code: {response.status_code}")
+    print(f'Downloading file {file_name} from {repo_id}')   
+    hf_hub_download(repo_id=repo_id,
+                    filename=file_name,
+                    local_dir_use_symlinks=False,
+                    local_dir=file_path
+    )
 
     print(f'Committing changes to volume.')
     volume.commit()
