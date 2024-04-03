@@ -19,17 +19,17 @@ load_dotenv()
 # embedding_model_name = 'sentence-transformers/all-MiniLM-L6-v2'
 # download_embedding_model.remote(embedding_model_name)
 
+# Query Wittgenbot
+query_wittgenbot_ft = modal.Function.lookup("wittgenbot", "query_wittgenbot_ft")
+question = 'According to Ludwig Wittgenstein\'s philosophy, is the existence of a private language possible?'
+response = query_wittgenbot_ft.remote(question)
+print(response)
+
 # Query Mistral-7B-Instruct-v0.2-GGUF
 # query_mistral_7b_instruct_v0p2 = modal.Function.lookup("wittgenbot", "query_mistral_7b_instruct_v0p2")
 # question = 'Why is the sky blue?'
 # response = query_mistral_7b_instruct_v0p2.remote(question)
 # print(response)
-
-# Query Wittgenbot
-query_wittgenbot = modal.Function.lookup("wittgenbot", "query_wittgenbot")
-question = 'According to Ludwig Wittgenstein\'s philosophy, is the existence of a private language possible?'
-response = query_wittgenbot.remote(question)
-print(response)
 
 # Run semantic search
 # semantic_search = modal.Function.lookup("wittgenbot", "semantic_search")

@@ -20,7 +20,7 @@ images = {
         Image.debian_slim(python_version="3.10")
         .pip_install("ctransformers", "torch")
     ),
-    "query_wittgenbot": (
+    "query_wittgenbot_ft": (
         Image.debian_slim(python_version="3.10")
         .pip_install("transformers", "torch", "accelerate", "bitsandbytes")
     ),

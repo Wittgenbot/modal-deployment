@@ -38,8 +38,8 @@ def query_mistral_7b_instruct_v0p2(question):
     return response
 
 
-@stub.function(volumes={"/data": volume}, image=images['query_wittgenbot'], gpu="t4")
-def query_wittgenbot(question):
+@stub.function(volumes={"/data": volume}, image=images['query_wittgenbot_ft'], gpu="t4")
+def query_wittgenbot_ft(question):
 
     import torch
     from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
@@ -100,9 +100,9 @@ def query_wittgenbot(question):
                                     temperature=0.7,
                                     pad_token_id=tokenizer.eos_token_id)
 
-    decoded = tokenizer.batch_decode(generated_ids)
+    decoded = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
 
-    response = decoded[0]
+    response = decoded[0][len(prompt):]
 
     print("Response generated.")
 
