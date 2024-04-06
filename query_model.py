@@ -65,14 +65,10 @@ def query_wittgenbot_ft(question):
     print(f"Loading tokenizer...")
 
     tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path=wittgenbot_file_path)
-
-    ############################
-    # need to remove this after testing the fine-tuning script
     tokenizer.pad_token = tokenizer.unk_token
     tokenizer.padding_side = 'right'
     tokenizer.add_eos_token = False
     tokenizer.add_bos_token = False
-    ########################################
 
     print("Tokenizer successfully loaded.")
 
@@ -100,9 +96,9 @@ def query_wittgenbot_ft(question):
                                     temperature=0.7,
                                     pad_token_id=tokenizer.eos_token_id)
 
-    decoded = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
-
-    response = decoded[0][len(prompt):]
+    decoded = tokenizer.batch_decode(generated_ids)
+    
+    response = decoded[0][len(prompt):-4].strip()
 
     print("Response generated.")
 
