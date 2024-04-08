@@ -65,17 +65,12 @@ def query_wittgenbot_ft(question):
     print(f"Loading tokenizer...")
 
     tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path=wittgenbot_file_path)
-    tokenizer.pad_token = tokenizer.unk_token
-    tokenizer.padding_side = 'right'
-    tokenizer.add_eos_token = False
-    tokenizer.add_bos_token = False
 
     print("Tokenizer successfully loaded.")
 
     print("Querying model...")
 
     prompt_template = """
-    <s>
     [INST]
     You are a philosophy professor specialized in Ludwig Wittgenstein. Your task is to answer the following question about Ludwig Wittgenstein in a conversational, clear and coherent tone:
     {question}
@@ -96,9 +91,9 @@ def query_wittgenbot_ft(question):
                                     temperature=0.7,
                                     pad_token_id=tokenizer.eos_token_id)
 
-    decoded = tokenizer.batch_decode(generated_ids)
-    
-    response = decoded[0][len(prompt):-4].strip()
+    decoded = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
+
+    response = decoded[0][len(prompt):].strip()
 
     print("Response generated.")
 
