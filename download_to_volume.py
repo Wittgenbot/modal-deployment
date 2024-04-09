@@ -1,4 +1,4 @@
-from utils.modal_utils import stub, volume, images
+from utils import stub, volume, images
 import os
 
 

@@ -1,4 +1,4 @@
-from utils.modal_utils import stub, volume, images
+from utils import stub, volume, images
 
 
 @stub.function()
@@ -26,7 +26,7 @@ def query_model_ctransformers(repo_id, model_file_name, question):
 
     return response
 
-# change image name!!
+
 @stub.function(volumes={"/data": volume}, image=images['query_model'], gpu="t4")
 def query_mistral_7b_instruct_v0p2(question):
 
@@ -72,7 +72,7 @@ def query_wittgenbot_ft(question):
 
     prompt_template = """
     [INST]
-    You are a philosophy professor specialized in Ludwig Wittgenstein. Your task is to answer the following question about Ludwig Wittgenstein in a conversational, clear and coherent tone:
+    You are a helpful chatbot assistant specialized in Ludwig Wittgenstein. Your task is to answer the following question about Ludwig Wittgenstein in a conversational, clear and coherent tone:
     {question}
     [/INST]
     """
