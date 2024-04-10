@@ -89,11 +89,11 @@ def query_wittgenbot_ft(question):
                                     do_sample=True,
                                     top_p=0.9,
                                     temperature=0.7,
-                                    pad_token_id=tokenizer.eos_token_id)
+                                    pad_token_id=tokenizer.unk_token_id)
 
-    decoded = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
+    decoded = tokenizer.decode(generated_ids[0], skip_special_tokens=True)
 
-    response = decoded[0][len(prompt):].strip()
+    response = decoded[len(prompt):].strip()
 
     print("Response generated.")
 
