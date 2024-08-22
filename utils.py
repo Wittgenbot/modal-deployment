@@ -1,7 +1,7 @@
-from modal import Stub, Volume, Image
+from modal import App, Volume, Image
 
 
-stub = Stub("wittgenbot")
+stub = App("wittgenbot")
 
 
 volume = Volume.from_name("fyp-volume")
